@@ -63,7 +63,7 @@ int main(void)
 
 	while(crmny()){PRT_LOG;} //Welcome Ceremony
 
-	while(gage()){PRT_LOG;} //Main Process
+	while(gauge()){PRT_LOG;} //Main Process
 
 	while(chkShtDw()){PRT_LOG;} //Check Shutdown
 

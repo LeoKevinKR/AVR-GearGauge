@@ -97,7 +97,7 @@
  * 0 = 사용안함
  * 1 = 사용함(UART 통신으로 주요동작 로그 출력)
  */
-#define UART_LOG	1
+#define UART_LOG	0
 //=== STATIC SETTING : END =======================================
 
 
