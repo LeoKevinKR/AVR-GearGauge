@@ -70,7 +70,7 @@
   * GearGauge.c : main()
   * MySettings.h : 사용자셋팅 헤더
   * GearGaugeLib.h : 라이브러리 헤더
-  * GearGaugeLib.a : 라이브러리
+  * libGearGaugeLib.a : 라이브러리
 * 저장할 폴더는 .c파일을 제외하고 아무곳이나 관계없지만, 편의를 위해 모두 메인 .c 파일과 같은 폴더에 저장
 
 ****
@@ -266,7 +266,7 @@
 
 ****
 ## 3.4 컴파일 & 업로드
-* GearGaugeLib.a 라이브러리에 추가
+* libGearGaugeLib.a 라이브러리에 추가
 * 위의 회로도와 동일하게 제작한 경우, 컴파일 해놓은 [GearGauge-NoLog.hex](./Release/GearGauge-NoLog.hex) , [GearGauge-Log.hex](./Release/GearGauge-Log.hex) 파일 사용가능.
 
 ****
