@@ -14,6 +14,8 @@
 
 int main(void)
 {
+	while(prepare(F_CPU, START_DELAY_MS));
+
 	/* Set unused ports
 	 * Repeat as all device have
 	 */
@@ -32,7 +34,6 @@ int main(void)
 	char mySet[]={My_Crmny,My_eFx,My_Sleep,My_Rvs,My_High,My_Low,My_Tempo};
 	cKeyVal snrMap[] = SENSOR_MAP;
 	if(!initDev(
-		F_CPU,
 		SEG_COM_ANODE,
 		SEG_USE_TR,
 		snrMap,
@@ -52,9 +53,13 @@ int main(void)
 		&DDR_PWM,
 		&PORT_PWM,
 		PIN_PWM,
+		&DDR_INT,
+		PIN_INT0,
+		PIN_INT1,
 
 		UNUSED_STY,
-		UART_LOG
+		USE_LED,
+		USART_LOG
 	)){
 		PRT_LOG;
 		return 0;

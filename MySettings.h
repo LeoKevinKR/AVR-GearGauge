@@ -31,9 +31,13 @@
 #define DDR_SEG		DDRF	//7-Segment FND register
 #define PORT_SEG	PORTF	//7-Segment FND port
 
-#define DDR_PWM		DDRA	//PWM register
+#define DDR_PWM		DDRB	//PWM register
 #define PORT_PWM	PORTB	//PWM port
 #define PIN_PWM		DDB7	//PWM out pin(OC2)
+
+#define DDR_INT		DDRD	//External interrupt
+#define PIN_INT0	PIND0	//External interrupt 0
+#define PIN_INT1	PIND1	//External interrupt 1
 
 /** SEG_COM_ANODE : FND Type
  * 0 = Common Cathode(공통-)
@@ -93,11 +97,22 @@
 #define UNUSED_STY	1
 
 
-/* UART_LOG : UART 로그 출력
+/* USART_LOG : USART 로그 출력
  * 0 = 사용안함
- * 1 = 사용함(UART 통신으로 주요동작 로그 출력)
+ * 1 = 사용함(USART 통신으로 주요동작 로그 출력)
  */
-#define UART_LOG	0
+#define USART_LOG	1
+
+/* START_DELAY_MS : 프로그램 시작 대기시간
+ * 마이크로초 단위 정수로 입력. (예: 1000 -> 1초)
+ */
+#define START_DELAY_MS	500
+
+/* USE_LED : 상태표시 LED 사용
+ * 0 = 사용안함
+ * 1 = 사용함
+ */
+#define USE_LED		1
 //=== STATIC SETTING : END =======================================
 
 
@@ -150,7 +165,7 @@
 
 
 /** My_Tempo (t) : 동작속도 조절 계수
- * 1(느림) ~ 5(정상) ~ 9(빠름)
+ * 1(느림) ~ 5(보통) ~ 9(빠름)
  */
 #define My_Tempo	5
 

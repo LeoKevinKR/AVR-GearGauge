@@ -1,4 +1,4 @@
-﻿/* GearGaugeLib.h - v2.0
+﻿/* GearGaugeLib.h - v2.1
 
  (c) 2009 Seung-Won Lee  http://whoisit.tistory.com  SoftWareYi@gmail.com
  (c) 2018 LeoKevin    http://leokevin.com
@@ -31,30 +31,8 @@
 #ifndef DDR_PWM
 #	error "DDR_PWM is not defined"
 #endif
-
-#ifndef TIMSK
-#	error "TIMSK is not defined"
-#endif
-
-#ifndef TCNT0
-#	error "TCNT0 is not defined"
-#endif
-#ifndef TCCR0
-#	error "TCCR0 is not defined"
-#endif
-
-#ifndef TCNT2
-#	error "TCNT2 is not defined"
-#endif
-#ifndef TCCR2
-#	error "TCCR2 is not defined"
-#endif
-#ifndef OCR2
-#	error "OCR2 is not defined"
-#endif
-
-#ifndef SFIOR
-#	error "SFIOR is not defined"
+#ifndef DDR_INT
+#	error "DDR_INT is not defined"
 #endif
 
 #if SEG_COM_ANODE > 1
@@ -63,8 +41,8 @@
 #if SEG_USE_TR > 1
 #	error "SEG_USE_TR is not avail"
 #endif
-#if UART_LOG > 1
-#	error "UART_LOG is not avail"
+#if USART_LOG > 1
+#	error "USART_LOG is not avail"
 #endif
 #if UNUSED_STY > 1
 #	error "UNUSED_STY is not avail"
@@ -90,32 +68,32 @@
 #if (My_Tempo > 9 || My_Tempo < 1)
 #	error "My_Tempo is not avail"
 #endif
-#if UART_LOG > 1
-#	error "UART_LOG is not avail"
+#if USE_LED > 1
+#	error "USE_LED is not avail"
+#endif
+#if (START_DELAY_MS < 0 || START_DELAY_MS > 10000)
+#	error "START_DELAY_MS is not avail"
 #endif
 
-
-//debugging-LED output
-#define LEDOUT(x)	(char)~x
 
 //set unused port
 #if UNUSED_STY==0 //input with pull-up
 #	define SET_UNUSEDPORT(x) \
-	if(&DDR##x != &DDR_SNR && &DDR##x != &DDR_LED && &DDR##x != &DDR_SEG && &DDR##x != &DDR_PWM) { \
+	if(&DDR##x != &DDR_SNR && &DDR##x != &DDR_LED && &DDR##x != &DDR_SEG) { \
 		DDR##x=0x00; PORT##x=0xFF; \
 	}
 #elif UNUSED_STY==1 //output with nothing
 #	define SET_UNUSEDPORT(x) \
-	if(&DDR##x != &DDR_SNR && &DDR##x != &DDR_LED && &DDR##x != &DDR_SEG && &DDR##x != &DDR_PWM) { \
+	if(&DDR##x != &DDR_SNR && &DDR##x != &DDR_LED && &DDR##x != &DDR_SEG) { \
 		DDR##x=0xFF; PORT##x=0x00; \
 	}
 #endif
 
 
 //UART
-#if UART_LOG == 1
-#include <stdio.h> //puts()
-#define INIT_LOG init_uart();stdout = &mystdout;
+#if USART_LOG == 1
+#include <stdio.h>
+#define INIT_LOG init_usart();stdout = &mystdout;
 #define PRT_LOG	if(*gLogStr){puts(gLogStr);gLogStr[0]='\0';}
 
 static int putchar0(char c, FILE *stream);	// 1 char Transmit
@@ -127,7 +105,7 @@ int putchar0(char c, FILE *stream)
 	UDR0 = c; // 1 character trans
 	return 0;
 }
-void init_uart()
+void init_usart()
 {
 	UBRR0H = 0;		// 12bit
 	UBRR0L = 8;		// Look ATmega128 datasheet. 16Mhz, 115200 baud
@@ -137,19 +115,21 @@ void init_uart()
 extern char gLogStr[];
 
 #else
+
 #define INIT_LOG
 #define PRT_LOG
-#endif /*UART_LOG == 1*/
+
+#endif /*USART_LOG == 1*/
 
 
 typedef struct { char k; char v; } cKeyVal;
 
+char prepare(unsigned long v_F_CPU, unsigned int ms);
 char initDev(
-	unsigned long v_F_CPU,
-	char v_SegComAnode,
-	char v_SegUseTr,
+	char v_SegCA,
+	char v_SegTr,
 	cKeyVal *v_SnrMap,
-	signed char v_SnrMapSize,
+	signed char v_SnrMapCnt,
 	char v_SnrUp,
 	char v_SnrDw,
 	char *v_PrefMtn,
@@ -169,8 +149,13 @@ char initDev(
 	volatile uint8_t *v_PORT_PWM,
 	char v_PIN_PWM,
 
+	volatile uint8_t *v_DDR_INT,
+	char v_PIN_INT0,
+	char v_PIN_INT1,
+
 	char v_unuse,
-	char v_uart_log
+	char v_useLED,
+	char v_log
 );
 char crmny(void);
 char gauge(void);

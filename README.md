@@ -30,10 +30,11 @@
     * 입력 8개(포트 1개)
     * 출력 16개(포트 2개) + PWM 1개
     * 8-Bit Timer/Counter 2개
+    * 외부인터럽트 2개
   * Memory
     * 30KB Program Flash memory
     * 4byte EEPROM
-  * 사용한 AVR보드 : JMOD-128-1(ATmega128) http://jcnet.co.kr/?p=48
+  * 개발에 사용한 AVR보드 : JMOD-128-1(ATmega128) http://jcnet.co.kr/?p=48
 * 리드스위치
   * PMC-1001 http://www.eleparts.co.kr/EPX33BHN
 * 네오디뮴 자석
@@ -43,6 +44,7 @@
 * 5볼트 레귤레이터 : LM7805
 * 다이오드 : 1N4001~7, 1N4148
 * 캐패시터 : 0.1~470uF
+* 슈퍼캐패시터 : 1F
 * LED
 * 저항 : 330Ω, 10kΩ
 * PNP Transistor : 2SA1085
@@ -55,6 +57,7 @@
 ****
 ## 2. 회로구성
 ![Gear_Gauge_Circuit_v1](./Gear_Gauge_Circuit_v1.png)
+![fnd](./fnd.jpg)
 
 ****
 ## 3. C 프로그래밍
@@ -70,8 +73,9 @@
   * GearGauge.c : main()
   * MySettings.h : 사용자셋팅 헤더
   * GearGaugeLib.h : 라이브러리 헤더
-  * libGearGaugeLib.a : 라이브러리
+  * libGearGaugeLib-???.a : 라이브러리
 * 저장할 폴더는 .c파일을 제외하고 아무곳이나 관계없지만, 편의를 위해 모두 메인 .c 파일과 같은 폴더에 저장
+* libGearGaugeLib-???.a 파일은 기기에 맞는 것으로 다운로드후 libGearGaugeLib.a 으로 이름을 변경하세요.
 
 ****
 ## 3.3 소스 수정(MySettings.h)
@@ -93,7 +97,7 @@
 - 기본값 : PORT A
 - 입력핀 8개짜리 포트 지정
 
-### * 기어위치 디버그 LED용 포트
+### * 센서입력상태 LED용 포트
 ```c
 #define DDR_LED		DDRC
 #define PORT_LED	PORTC
@@ -117,6 +121,15 @@
 ```
 - 기본값 : PORT B
 - OC2 출력핀이 있는 포트와 핀을 설정
+
+### * 외부인터럽트 포트
+```c
+#define DDR_INT		DDRD
+#define PIN_INT0	PIND0
+#define PIN_INT1	PIND1
+```
+- 기본값 : PORT D
+- INT0 & INT1 입력핀이 있는 포트와 핀을 설정
 
 ### * 7-세그먼트 타입
 ```c
@@ -183,11 +196,25 @@
 - 0 : 입력(내부풀업 작동)
 - 1 : 출력(출력값 없음)
 
-### * UART 로그 출력
+### * USART 로그 출력
 ```c
-#define UART_LOG	0
+#define USART_LOG	0
 ```
-- UART 통신으로 동작로그 출력
+- USART 통신으로 동작로그 출력
+- 0 : 사용안함
+- 1 : 사용안함
+
+### * 프로그램 시작 대기시간
+```c
+#define START_DELAY_MS	1000
+```
+- 마이크로초 단위 정수로 입력. (예: 1000 -> 1초)
+
+### * 센서상태표시 LED 사용
+```c
+#define USE_LED		1
+```
+- 소비전력 절약 목적으로 LED 사용 선택
 - 0 : 사용안함
 - 1 : 사용안함
 
@@ -266,17 +293,23 @@
 
 ****
 ## 3.4 컴파일 & 업로드
-* libGearGaugeLib.a 라이브러리에 추가
-* 위의 회로도와 동일하게 제작한 경우, 컴파일 해놓은 [GearGauge-NoLog.hex](./Release/GearGauge-NoLog.hex) , [GearGauge-Log.hex](./Release/GearGauge-Log.hex) 파일 사용가능.
+* libGearGaugeLib.a 라이브러리 추가
+* 위의 회로도와 동일하게 제작한 경우, 미리 컴파일 해놓은 [GearGauge-NoLog-ATmega128.hex](./Release/GearGauge-NoLog-ATmega128.hex) , [GearGauge-Log-ATmega128.hex](./Release/GearGauge-Log-ATmega128.hex) 파일 사용가능.
 
 ****
 # 업데이트 기록
 * Oct. 2018
+  * v2.1
+    * 워치독타이머 적용
+    * 프로그램 시작 대기 기능 추가
+    * 전원 차단 대응 로직 추가
+      * 슈퍼캐패시터, 외부인터럽트0&1
+    * 상태표시 LED 사용여부 선택 추가
   * v2.0
     * 라리브러리 형태로 제공
     * 동작속도 조절 기능 추가
     * 미사용 포트&핀 처리방식 선택 추가
-    * 로그 출력기능(UART) 추가
+    * 로그 출력기능(USART) 추가
     * 설정모드의 항목명과 현재값을 번갈아 표시
     * 셋팅모드의 후진옵션 노출순서 변경
     * 셋팅모드 증가/감소 인식 설정 추가
