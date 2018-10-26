@@ -294,7 +294,7 @@
 ****
 ## 3.4 컴파일 & 업로드
 * libGearGaugeLib.a 라이브러리 추가
-* 위의 회로도와 동일하게 제작한 경우, 미리 컴파일 해놓은 [GearGauge-NoLog-ATmega128.hex](./Release/GearGauge-NoLog-ATmega128.hex) , [GearGauge-Log-ATmega128.hex](./Release/GearGauge-Log-ATmega128.hex) 파일 사용가능.
+* 위의 회로도와 동일하게 제작한 경우, 미리 컴파일 해놓은 [GearGauge-NoLog.hex](./Release/GearGauge-NoLog.hex) , [GearGauge-Log.hex](./Release/GearGauge-Log.hex) 파일 사용가능.
 
 ****
 # 업데이트 기록
