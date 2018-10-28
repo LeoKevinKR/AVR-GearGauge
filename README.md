@@ -41,10 +41,11 @@
   * 5파이 2T http://www.eleparts.co.kr/EPX34WVG
 * 7-세그먼트
   * Common Anode, Cathode 타입을 프로그램에서 지정할 수 있지만, Anode 타입을 추천.
-* 5볼트 레귤레이터 : LM7805
+* 5볼트 레귤레이터 : LM7805 또는 차량용 충전기의 레귤레이터 부분이용
+  * ![Car Charger](./car_charger.jpg)
 * 다이오드 : 1N4001~7, 1N4148
 * 캐패시터 : 0.1~470uF
-* 슈퍼캐패시터 : 1F
+* 슈퍼캐패시터 : 5.5V 1F 내외
 * LED
 * 저항 : 330Ω, 10kΩ
 * PNP Transistor : 2SA1085
@@ -57,7 +58,8 @@
 ****
 ## 2. 회로구성
 ![Gear_Gauge_Circuit_v1](./Gear_Gauge_Circuit_v1.png)
-![fnd](./fnd.jpg)
+![FND](./fnd.jpg)
+![Circuit Board](./board.jpg)
 
 ****
 ## 3. C 프로그래밍
@@ -65,7 +67,7 @@
 * AVR Studio
   * Overview https://www.microchip.com/avr-support
   * Archive http://www.microchip.com/avr-support/avr-and-sam-downloads-archive
-* AVR Toolchain (C-Compiler) http://www.microchip.com/avr-support/avr-and-arm-toolchains-(c-compilers)
+* AVR Toolchain (for AVR Studio 4) http://www.microchip.com/avr-support/avr-and-arm-toolchains-(c-compilers)
 
 ****
 ## 3.2 소스파일 다운로드
@@ -294,16 +296,21 @@
 ****
 ## 3.4 컴파일 & 업로드
 * libGearGaugeLib.a 라이브러리 추가
-* 위의 회로도와 동일하게 제작한 경우, 미리 컴파일 해놓은 [GearGauge-NoLog.hex](./Release/GearGauge-NoLog.hex) , [GearGauge-Log.hex](./Release/GearGauge-Log.hex) 파일 사용가능.
+* 위의 회로도와 동일하게 제작한 경우, 미리 컴파일 해놓은 [GearGauge-ATmega128.hex](./Release/GearGauge-ATmega128.hex) , [GearGauge-ATmega128-Log.hex](./Release/GearGauge-ATmega128-Log.hex) 파일 사용가능.
 
 ****
 # 업데이트 기록
 * Oct. 2018
+  * v2.2
+    * main() 간소화
   * v2.1
     * 워치독타이머 적용
     * 프로그램 시작 대기 기능 추가
+      * 초기전원 불안정에 대비하기 위함
     * 전원 차단 대응 로직 추가
-      * 슈퍼캐패시터, 외부인터럽트0&1
+      * 슈퍼캐패시터, 외부인터럽트0&1 사용
+      * 전원 차단 3초후 프로그램 종료 & MCU 파워다운모드
+      * 전원 재공급시 리셋
     * 상태표시 LED 사용여부 선택 추가
   * v2.0
     * 라리브러리 형태로 제공

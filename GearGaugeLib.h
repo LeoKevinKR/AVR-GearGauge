@@ -1,4 +1,4 @@
-﻿/* GearGaugeLib.h - v2.1
+﻿/* GearGaugeLib.h - v2.2
 
  (c) 2009 Seung-Won Lee  http://whoisit.tistory.com  SoftWareYi@gmail.com
  (c) 2018 LeoKevin    http://leokevin.com
@@ -124,7 +124,7 @@ extern char gLogStr[];
 
 typedef struct { char k; char v; } cKeyVal;
 
-char prepare(unsigned long v_F_CPU, unsigned int ms);
+char ready(unsigned long v_F_CPU, unsigned int ms);
 char initDev(
 	char v_SegCA,
 	char v_SegTr,
@@ -157,7 +157,5 @@ char initDev(
 	char v_useLED,
 	char v_log
 );
-char crmny(void);
 char gauge(void);
-char chkShtDw(void);
 #endif /* GEARGAUGELIB_H_ */

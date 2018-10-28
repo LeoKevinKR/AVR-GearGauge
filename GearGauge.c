@@ -14,8 +14,6 @@
 
 int main(void)
 {
-	while(prepare(F_CPU, START_DELAY_MS));
-
 	/* Set unused ports
 	 * Repeat as all device have
 	 */
@@ -28,6 +26,8 @@ int main(void)
 	SET_UNUSEDPORT(G);
 
 	/***** Do NOT edit below if not sure *****/
+
+	while(ready(F_CPU, START_DELAY_MS));
 
 	//Initialize Device
 	INIT_LOG;
@@ -62,15 +62,11 @@ int main(void)
 		USART_LOG
 	)){
 		PRT_LOG;
-		return 0;
+		while(1);
 	}
 	PRT_LOG;
 
-	while(crmny()){PRT_LOG;} //Welcome Ceremony
-
 	while(gauge()){PRT_LOG;} //Main Process
 
-	while(chkShtDw()){PRT_LOG;} //Check Shutdown
-
-	return 0;
+	while(1);
 }

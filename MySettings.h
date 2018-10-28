@@ -101,7 +101,7 @@
  * 0 = 사용안함
  * 1 = 사용함(USART 통신으로 주요동작 로그 출력)
  */
-#define USART_LOG	1
+#define USART_LOG	0
 
 /* START_DELAY_MS : 프로그램 시작 대기시간
  * 마이크로초 단위 정수로 입력. (예: 1000 -> 1초)
