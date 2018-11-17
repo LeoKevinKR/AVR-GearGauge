@@ -1,4 +1,4 @@
-﻿/* GearGaugeLib.h - v2.2
+﻿/* GearGaugeLib.h - v2.3
 
  (c) 2009 Seung-Won Lee  http://whoisit.tistory.com  SoftWareYi@gmail.com
  (c) 2018 LeoKevin    http://leokevin.com

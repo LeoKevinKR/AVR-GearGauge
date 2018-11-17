@@ -58,7 +58,7 @@
 
 ****
 ## 2. 회로구성
-![Gear_Gauge_Circuit_v1](./Gear_Gauge_Circuit_v1.png)
+* Circuit : https://easyeda.com/LeoKevin/avr-gear-gauge
 ![FND](./fnd.jpg)
 ![Circuit Board](./board.jpg)
 
@@ -301,6 +301,9 @@
 
 ****
 # 업데이트 기록
+* v2.3
+  * 숨쉬기 속도 조정
+
 * v2.2
   * main() 간소화
 
