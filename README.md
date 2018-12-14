@@ -58,9 +58,9 @@
 
 ****
 ## 2. 회로구성
-* Circuit : https://easyeda.com/LeoKevin/avr-gear-gauge
-![FND](./fnd.jpg)
-![Circuit Board](./board.jpg)
+* Circuit Schematic : https://easyeda.com/LeoKevin/avr-gear-gauge
+* ![FND](./fnd.jpg)
+* ![Circuit Board](./board.jpg)
 
 ****
 ## 3. C 프로그래밍
